@@ -1,0 +1,7 @@
+- run composer install
+- maybe composer  dump-autoload
+- edit config class
+- edit db credentials in config class
+
+Run tests with code coverage
+./vendor/bin/phpunit --coverage-html ./report
