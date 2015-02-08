@@ -5,3 +5,76 @@
 
 Run tests with code coverage
 ./vendor/bin/phpunit --coverage-html ./report
+
+
+!!The content type of POST request are application/x-www-form-urlencoded Content-Type
+
+#REQUESTS
+uri: /api/monsters
+method: POST
+description: Create new monster. 
+Parameters: race, level, attack, defense, turns, isAlive, gold
+response example:
+{
+    "id": "6",
+    "race": "human",
+    "gold": "5000",
+    "level": "6",
+    "attack": "46",
+    "defense": "30",
+    "turns": "10",
+    "isAlive": true
+}
+Response will be a monster resource object with all its attributes.
+
+
+uri: /api/monsters/
+method: GET
+description:Get all monsters from database
+response example:
+
+[
+    {
+        "id": "1",
+        "race": "human",
+        "gold": "50",
+        "level": "1",
+        "attack": "100",
+        "defense": "200",
+        "turns": "2000",
+        "isAlive": true
+    },
+    {
+        "id": "2",
+        "race": "elf",
+        "gold": "40",
+        "level": "3",
+        "attack": "100",
+        "defense": "250",
+        "turns": "10",
+        "isAlive": true
+    }
+]
+If no monster is found status code will be 404 and response will be an empty array
+
+
+uri: /api/monsters/144
+method: GET
+description: Get a monster by id
+response example:
+
+{
+    "id": "5",
+    "race": "elf",
+    "gold": "5000",
+    "level": "5",
+    "attack": "46",
+    "defense": "30",
+    "turns": "10",
+    "isAlive": true
+}
+If no monster is found status code will be 404 and all fields will have null value.
+
+PUT - update if exists, error if not
+DELETE - delete by id
+

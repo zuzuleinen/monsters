@@ -46,7 +46,31 @@ class Manager
             $pdoStatement->bindParam(sprintf(':%s', $columnName), $model->$methodToCall());
         }
 
-        return $pdoStatement->execute();
+        $result = $pdoStatement->execute();
+
+        if ($result === true) {
+            $model->setId($pdo->lastInsertId());
+            return $result;
+        }
+        //@todo throw exception on failure
+    }
+
+    /**
+     * Find model by id
+     * 
+     * @param \Andrei\App\Db\AbstractMysqlModel $model
+     * @param int $id
+     * @return AbstractMysqlModel|null
+     */
+    public function findById(AbstractMysqlModel $model, $id)
+    {
+        $result = $this->select($model, array(array($model->getPrimaryKeyName(), '=', $id)));
+
+        if (count($result)) {
+            return array_pop($result);
+        }
+
+        return null;
     }
 
     /**
@@ -83,7 +107,7 @@ class Manager
 
         return $models;
     }
-    
+
     /**
      * Update a model in the database
      * @param \Andrei\App\Db\AbstractMysqlModel $model
@@ -116,6 +140,27 @@ class Manager
      * @return bool True on success, False on error
      */
     public function delete(AbstractMysqlModel $model)
+    {
+        $pdo = $this->connection->getPdo();
+
+        $statement = $this->getDeleteStatementForModel(
+            $model, array(array($model->getPrimaryKeyName(), '=', $model->getId()))
+        );
+
+        /* @var $pdoStatement \PDOStatement */
+        $pdoStatement = $pdo->prepare($statement);
+        $pdoStatement->bindParam(sprintf(':%s', $model->getPrimaryKeyName()), $model->getId());
+
+        return $pdoStatement->execute();
+    }
+
+    /**
+     * Delete all models from db
+     * 
+     * @param \Andrei\App\Db\AbstractMysqlModel $model
+     * @return bool True on success, False on error
+     */
+    public function deleteAll(AbstractMysqlModel $model)
     {
         $pdo = $this->connection->getPdo();
 
@@ -258,4 +303,5 @@ class Manager
 
         return $updateClause;
     }
+
 }

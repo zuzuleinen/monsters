@@ -64,8 +64,9 @@ class Config
 
         $this->router = new Router();
 
-        $this->router->addRoute(new Route('/api/{id}', 'ApiController'));
-        $this->router->addRoute(new Route('/test', 'ApiController'));
+        $this->router->addRoute(new Route('/api', 'ApiController'));
+        $this->router->addRoute(new Route('/api/monsters', 'MonstersController'));
+        $this->router->addRoute(new Route('/api/monsters/{id}', 'MonstersController', 'viewAction'));
         
         return $this->router;
     }

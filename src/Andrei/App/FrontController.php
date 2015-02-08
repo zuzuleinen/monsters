@@ -3,6 +3,8 @@
 namespace Andrei\App;
 
 use Andrei\App\Routing\Route;
+use Andrei\App\Application;
+use Andrei\App\Http\Request;
 
 /**
  * FrontController class responsible for loading the correct 
@@ -18,16 +20,30 @@ class FrontController
      * @var Config 
      */
     protected $config;
+    
+    /**
+     * @var Application 
+     */
+    protected $application;
+    
+    /**
+     * Request object
+     * 
+     * @var Request 
+     */
+    protected $request;
 
-    public function __construct(Config $config)
+    public function __construct(Application $application)
     {
-        $this->config = $config;
+        $this->application = $application;
+        $this->config = $application->getConfig();
+        $this->request = $application->getRequest();
     }
 
     public function dispatch()
     {
         //@todo create a request object
-        $requestUri = $_SERVER['REQUEST_URI'];
+        $requestUri = $this->request->getRequestUri();
 
         $matchResult = $this->config->getRouter()->match($requestUri);
 
@@ -47,9 +63,12 @@ class FrontController
     protected function getResponse(Route $route, array $params)
     {
         $controllerClass = $this->getControllerFullClassName($route->getController());
-
+        
+        /* @var $controller AbstractController */
         $controller = new $controllerClass;
-
+        $controller->setApplication($this->application);
+        $controller->setRequest($this->request);
+        
         $actionName = $route->getAction();
         if (!method_exists($controller, $actionName)) {
             throw new \Exception(sprintf('Action `%s` does not exist on controller.', $actionName));

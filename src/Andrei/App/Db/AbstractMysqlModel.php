@@ -100,6 +100,11 @@ abstract class AbstractMysqlModel
         return $columnName === $this->primaryKey;
     }
     
+    /**
+     * Get primary key name
+     * 
+     * @return string
+     */
     public function getPrimaryKeyName()
     {
         return $this->primaryKey;

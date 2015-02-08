@@ -11,14 +11,19 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     protected $connectionStub;
     protected $applicationTest;
+    protected $requestStub;
 
     protected function setUp()
     {
         $this->connectionStub = $this->getMockBuilder('\Andrei\App\Db\ConnectionIterface')
             ->disableOriginalConstructor()
             ->getMock();
+        
+        $this->requestStub = $this->getMockBuilder('\Andrei\App\Http\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->applicationTest = new Application(new \Andrei\App\Config(), false);
+        $this->applicationTest = new Application(new \Andrei\App\Config(), $this->requestStub, false);
     }
 
     public function testGetStatementForInsertModel()
