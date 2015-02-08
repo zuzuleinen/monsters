@@ -2,6 +2,8 @@
 
 namespace Andrei\App\Routing;
 
+use Andrei\App\Helper;
+
 /**
  * Route object class responsible for holding
  * information about a route. Later a $methods 
@@ -44,6 +46,10 @@ class Route
      */
     public function __construct($path, $controller, $action = 'indexAction')
     {
+        if (!Helper::hasTrailingSlash($path)) {
+            $path .= '/';
+        }
+        
         $this->path = $path;
         $this->controller = $controller;
         $this->action = $action;

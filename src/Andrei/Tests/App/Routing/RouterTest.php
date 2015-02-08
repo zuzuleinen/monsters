@@ -24,10 +24,29 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $router = new Router();
         
         $router->addRoute(new Route('/api', 'ApiController', 'indexAction'));
+        $router->addRoute(new Route('/user/{id}/admin/{adminId}', 'UserController', 'indexAction'));
+        $router->addRoute(new Route('/monster/{id}', 'UserController', 'indexAction'));
         
-        $result = $router->match('/api');
+        $apiResult = $router->match('/api');
+        $apiResultWithTrailing = $router->match('/api/');
+        $resultWithSlugs = $router->match('/user/22/admin/102/');
+        $resultSlugWithoutTrailing = $router->match('/monster/12');
         
-        $this->assertInstanceOf('Andrei\App\Routing\Route', $result);
+        $this->assertInstanceOf('Andrei\App\Routing\Route', $apiResult['route']);
+        $this->assertInstanceOf('Andrei\App\Routing\Route', $apiResultWithTrailing['route']);
+        
+        $this->assertInstanceOf('Andrei\App\Routing\Route', $resultWithSlugs['route']);
+        $this->assertInternalType('array', $resultWithSlugs['params']);
+        $this->assertArrayHasKey('id',  $resultWithSlugs['params']);
+        $this->assertArrayHasKey('adminId',  $resultWithSlugs['params']);
+        $this->assertEquals(22, $resultWithSlugs['params']['id']);
+        $this->assertEquals(102, $resultWithSlugs['params']['adminId']);
+        
+        
+        $this->assertInstanceOf('Andrei\App\Routing\Route', $resultSlugWithoutTrailing['route']);
+        $this->assertInternalType('array', $resultSlugWithoutTrailing['params']);
+        $this->assertArrayHasKey('id',  $resultSlugWithoutTrailing['params']);
+        $this->assertEquals(12, $resultSlugWithoutTrailing['params']['id']);
     }
     
     /**

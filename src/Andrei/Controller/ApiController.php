@@ -6,9 +6,9 @@ use Andrei\App\Http\Response\Response;
 
 class ApiController
 {
-    public function indexAction()
+    public function indexAction($id = null)
     {
-        return new Response('Hello');
+        return new Response(sprintf('Hello id %s', $id));
     }
 }
 

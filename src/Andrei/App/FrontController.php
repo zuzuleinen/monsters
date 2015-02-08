@@ -29,10 +29,10 @@ class FrontController
         //@todo create a request object
         $requestUri = $_SERVER['REQUEST_URI'];
 
-        $route = $this->config->getRouter()->match($requestUri);
+        $matchResult = $this->config->getRouter()->match($requestUri);
 
-        if ($route instanceof Route) {
-            $response = $this->getResponse($route);
+        if ($matchResult['route'] instanceof Route) {
+            $response = $this->getResponse($matchResult['route'], $matchResult['params']);
             echo $response->render();
         }
     }
@@ -44,7 +44,7 @@ class FrontController
      * @return Http\Response\Response
      * @throws \Exception
      */
-    protected function getResponse(Route $route)
+    protected function getResponse(Route $route, array $params)
     {
         $controllerClass = $this->getControllerFullClassName($route->getController());
 
@@ -54,7 +54,8 @@ class FrontController
         if (!method_exists($controller, $actionName)) {
             throw new \Exception(sprintf('Action `%s` does not exist on controller.', $actionName));
         }
-        $response = $controller->$actionName();
+        
+        $response = call_user_func_array(array($controller, $actionName), $params);
 
         if (!$response instanceof Http\Response\AbstractResponse) {
             throw new \Exception('An action must return an instance of AbstractResponse');

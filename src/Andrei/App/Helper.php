@@ -31,4 +31,15 @@ class Helper
     {
         return preg_replace('/_(.?)/e',"strtoupper('$1')",$inputString); 
     }
+    
+    /**
+     * Check if a string has trailing slash
+     * 
+     * @param string $inputString
+     * @return bool
+     */
+    public static function hasTrailingSlash($inputString)
+    {
+        return substr($inputString, -1) === '/';
+    }
 }
