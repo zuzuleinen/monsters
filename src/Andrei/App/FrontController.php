@@ -42,10 +42,7 @@ class FrontController
 
     public function dispatch()
     {
-        //@todo create a request object
-        $requestUri = $this->request->getRequestUri();
-
-        $matchResult = $this->config->getRouter()->match($requestUri);
+        $matchResult = $this->config->getRouter()->match($this->request);
 
         if ($matchResult['route'] instanceof Route) {
             $response = $this->getResponse($matchResult['route'], $matchResult['params']);

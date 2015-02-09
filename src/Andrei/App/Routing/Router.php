@@ -2,6 +2,8 @@
 
 namespace Andrei\App\Routing;
 
+use Andrei\App\Http\Request;
+
 /**
  * Router class responsible for holding information
  * about application routes 
@@ -40,14 +42,16 @@ class Router
     }
 
     /**
-     * Match a request URI against a Route. 
-     * @param string $requestUri
+     * Match a Request against a Route
+     * @param Request $request
      * @return array An array containing the `route` and `params` 
      * from slugs
      * @throws \Exception
      */
-    public function match($requestUri)
+    public function match(Request $request)
     {
+        $requestUri = $request->getRequestUri();
+        
         if (substr($requestUri, -1) !== '/') {
             $requestUri .= '/';
         }

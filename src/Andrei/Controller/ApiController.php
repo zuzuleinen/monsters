@@ -2,9 +2,11 @@
 
 namespace Andrei\Controller;
 
+use Andrei\App\AbstractController;
+
 use Andrei\App\Http\Response\Response;
 
-class ApiController
+class ApiController extends AbstractController
 {
     public function indexAction($id = null)
     {

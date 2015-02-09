@@ -85,7 +85,7 @@ class MonsterResponse
             if (!$monster instanceof Monster) {
                 throw new \LogicException('Each element of array must be Monster object.');
             }
-            $response[] = $this->getResponseObjectFromMonster($monster);
+            $response[] = self::getResponseObjectFromMonster($monster);
         }
 
         return $response;
