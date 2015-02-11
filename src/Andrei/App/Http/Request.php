@@ -110,4 +110,14 @@ class Request
     {
         return $this->server->get('REQUEST_URI');
     }
+    
+    /**
+     * Get request method
+     * 
+     * @return string
+     */
+    public function getRequestMethod()
+    {
+        return $this->server->get('REQUEST_METHOD');
+    }
 }

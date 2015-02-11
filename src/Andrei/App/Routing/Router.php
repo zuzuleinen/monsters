@@ -60,6 +60,10 @@ class Router
 
         /* @var $route Route */
         foreach ($this->routes as $route) {
+            if (!$route->isMethodAllowedForRoute($request->getRequestMethod())) {
+                continue;
+            }
+            
             if ($requestUri === $route->getPath()) {
                 $returnResult['route'] = $route;
                 return $returnResult;

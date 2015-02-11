@@ -37,6 +37,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->requestStub->expects($this->any())
             ->method('getRequestUri')
             ->willReturn('/api');
+        $this->requestStub->expects($this->any())
+            ->method('getRequestMethod')
+            ->willReturn('GET');
 
         $apiResult = $router->match($this->requestStub);
         $this->assertInstanceOf('Andrei\App\Routing\Route', $apiResult['route']);
@@ -58,6 +61,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->requestStub->expects($this->any())
             ->method('getRequestUri')
             ->willReturn('/user/22/admin/102/');
+        $this->requestStub->expects($this->any())
+            ->method('getRequestMethod')
+            ->willReturn('GET');
 
         $resultWithSlugs = $router->match($this->requestStub);
 
@@ -78,6 +84,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->requestStub->expects($this->any())
             ->method('getRequestUri')
             ->willReturn('/monster/12');
+        $this->requestStub->expects($this->any())
+            ->method('getRequestMethod')
+            ->willReturn('GET');
 
         $resultSlugWithoutTrailing = $router->match($this->requestStub);
 
@@ -98,6 +107,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->requestStub->expects($this->any())
             ->method('getRequestUri')
             ->willReturn('/test');
+        $this->requestStub->expects($this->any())
+            ->method('getRequestMethod')
+            ->willReturn('GET');
 
         $router->match($this->requestStub);
     }

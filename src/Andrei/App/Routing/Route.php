@@ -36,6 +36,13 @@ class Route
      * @var string 
      */
     protected $action;
+    
+    /**
+     * Allowed request methods
+     * 
+     * @var array 
+     */
+    protected $allowedMethods;
 
     /**
      * Init route information
@@ -44,8 +51,12 @@ class Route
      * @param string $controller
      * @param string $action
      */
-    public function __construct($path, $controller, $action = 'indexAction')
-    {
+    public function __construct(
+        $path, 
+        $controller, 
+        $action = 'indexAction',
+        $allowedMethods = array('GET', 'POST', 'PUT', 'DELETE')
+    ) {
         if (!Helper::hasTrailingSlash($path)) {
             $path .= '/';
         }
@@ -53,6 +64,7 @@ class Route
         $this->path = $path;
         $this->controller = $controller;
         $this->action = $action;
+        $this->allowedMethods = $allowedMethods;
     }
 
     /**
@@ -83,5 +95,16 @@ class Route
     public function getAction()
     {
         return $this->action;
+    }
+    
+    /**
+     * Check if request method is allowed for route
+     * 
+     * @param string $method
+     * @return bool
+     */
+    public function isMethodAllowedForRoute($method)
+    {
+        return in_array(strtoupper($method), $this->allowedMethods);
     }
 }
