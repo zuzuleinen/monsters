@@ -32,14 +32,22 @@ class FrontController
      * @var Request 
      */
     protected $request;
-
+    
+    /**
+     * Init fron controller with the application object
+     * 
+     * @param Application $application
+     */
     public function __construct(Application $application)
     {
         $this->application = $application;
         $this->config = $application->getConfig();
         $this->request = $application->getRequest();
     }
-
+    
+    /**
+     * Find a route match for request and output the response
+     */
     public function dispatch()
     {
         $matchResult = $this->config->getRouter()->match($this->request);
