@@ -47,7 +47,7 @@ class AttackService
 
         $this->defenserMonster->setDefense($secondMonsterDefense);
         if ($secondMonsterDefense < 0) {
-            $this->defenserMonster->getModel()->setIsAlive(false);
+            $this->defenserMonster->setIsAlive(false);
         }
         $this->attackerMonster->setTurns($this->attackerMonster->getTurns() - 1);
         

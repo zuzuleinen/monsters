@@ -1,6 +1,6 @@
 <?php
 
-namespace Andrei\Tests\App\Game\Monster;
+namespace Andrei\Tests\Game\Monster;
 
 use Andrei\Game\Monster\ElfMonster;
 
