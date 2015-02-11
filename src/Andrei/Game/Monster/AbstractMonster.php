@@ -32,6 +32,16 @@ abstract class AbstractMonster implements MonsterInterface
     {
         $this->model = $monsterModel;
     }
+    
+    /**
+     * Get model
+     * 
+     * @return Monster
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
 
     /**
      * Get attack points
@@ -41,6 +51,16 @@ abstract class AbstractMonster implements MonsterInterface
     public function getAttack()
     {
         return (int) $this->model->getAttack();
+    }
+    
+    /**
+     * Set defense points
+     * 
+     * @param float $defensePoints
+     */
+    public function setDefense($defensePoints)
+    {
+        $this->model->setDefense($defensePoints);
     }
 
     /**
@@ -72,6 +92,16 @@ abstract class AbstractMonster implements MonsterInterface
     {
         return (int) $this->model->getLevel();
     }
+    
+    /**
+     * Set turns
+     * 
+     * @param int $turns
+     */
+    public function setTurns($turns)
+    {
+        $this->model->setTurns($turns);
+    }
 
     /**
      * Get number of turns
@@ -80,7 +110,17 @@ abstract class AbstractMonster implements MonsterInterface
      */
     public function getTurns()
     {
-        return $this->model->getTurns();
+        return (int) $this->model->getTurns();
+    }
+    
+    /**
+     * Set is alive
+     * 
+     * @param bool $isAlive
+     */
+    public function setIsAlive($isAlive)
+    {
+        $this->model->setIsAlive($isAlive);
     }
 
     /**

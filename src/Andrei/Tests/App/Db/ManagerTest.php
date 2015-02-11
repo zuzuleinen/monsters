@@ -138,7 +138,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $result = $manager->insert($user);
         
         //user is created in the database
-        $this->assertTrue($result);
+        $this->assertInstanceOf('Andrei\Model\User', $result);
         
         //test by selecting the user
         $users = $manager->select(new User(), array(array('email', '=', 'andrey.boar@gmail.com')));

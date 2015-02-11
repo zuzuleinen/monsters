@@ -64,8 +64,6 @@ class Config
 
         $this->router = new Router();
 
-        $this->router->addRoute(new Route('/api', 'ApiController'));
-        
         $this->router->addRoute(new Route('/api/monsters', 'MonstersController', 'getAllAction', array('GET')));
         $this->router->addRoute(new Route('/api/monsters', 'MonstersController', 'createAction', array('POST')));
         $this->router->addRoute(new Route('/api/monsters', 'MonstersController', 'deleteAllAction', array('DELETE')));
@@ -74,6 +72,9 @@ class Config
         $this->router->addRoute(new Route('/api/monsters/{id}', 'MonstersController', 'deleteByIdAction', array('DELETE')));
         $this->router->addRoute(new Route('/api/monsters/{id}', 'MonstersController', 'updateById', array('PUT')));
         $this->router->addRoute(new Route('/api/monsters/{id}', 'MonstersController', 'methodNotAllowedAction', array('POST')));
+        
+        $this->router->addRoute(new Route('/api/monsters/{attackerId}/{defenserId}', 'AttackController', 'attackAction', array('GET')));
+        $this->router->addRoute(new Route('/api/monsters/{attackerId}/{defenserId}', 'AttackController', 'methodNotAllowedAction', array('POST', 'DELETE', 'PUT')));
         
         return $this->router;
     }

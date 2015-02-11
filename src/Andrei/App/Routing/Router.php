@@ -86,7 +86,11 @@ class Router
                     }
                     return true;
                 });
-
+                
+                if (count($variablesNames) !== count($variablesValues)) {
+                    continue;
+                }
+                
                 if (preg_match($this->getPatternFromRoutePath($route->getPath()), $requestUri)) {
                     //create a slug => slugValue array
                     $params = array_combine($variablesNames, $variablesValues);

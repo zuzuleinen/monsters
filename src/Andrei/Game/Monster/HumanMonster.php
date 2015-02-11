@@ -22,4 +22,16 @@ class HumanMonster extends AbstractMonster
     {
         return Races::RACE_HUMAN;
     }
+    
+    /**
+     * Get human gold. Human will have 30% gold bonus
+     * 
+     * @return float
+     */
+    public function getGold()
+    {
+        $defaultGold = parent::getGold();
+        
+        return $defaultGold + (30/100) * $defaultGold;
+    }
 }
