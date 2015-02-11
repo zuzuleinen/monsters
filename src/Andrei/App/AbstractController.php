@@ -17,16 +17,16 @@ use Andrei\Game\Response\ErrorResponse;
  */
 class AbstractController
 {
+
     /**
      * @var Application 
      */
     protected $application;
-    
+
     /**
      * @var Request 
      */
     protected $request;
-
 
     /**
      * Set application
@@ -37,7 +37,7 @@ class AbstractController
     {
         $this->application = $application;
     }
-    
+
     /**
      * Set request object
      * 
@@ -47,7 +47,7 @@ class AbstractController
     {
         $this->request = $request;
     }
-    
+
     /**
      * Get a generic success response
      * 
@@ -56,10 +56,10 @@ class AbstractController
     public function getSuccessResponse()
     {
         $content = SuccessResponse::getContent();
-        
+
         return new JsonResponse($content);
     }
-    
+
     /**
      * Get error response
      * 
@@ -70,11 +70,20 @@ class AbstractController
     public function getErrroResponse($code, $message = null)
     {
         $errorResponse = new ErrorResponse($message);
-        
+
         $content = $errorResponse->getContent();
-        
+
         return new JsonResponse($content, $code);
     }
+    
+    /**
+     * Generic method for method not allowed response
+     * 
+     * @return JsonResponse
+     */
+    public function methodNotAllowedAction()
+    {
+        return $this->getErrroResponse(405, ErrorResponse::MSG_METHOD_NOT_ALLOWED);
+    }
+
 }
-
-

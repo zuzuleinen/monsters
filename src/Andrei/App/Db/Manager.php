@@ -50,7 +50,7 @@ class Manager
 
         if ($result === true) {
             $model->setId($pdo->lastInsertId());
-            return $result;
+            return $model;
         }
         //@todo throw exception on failure
     }
