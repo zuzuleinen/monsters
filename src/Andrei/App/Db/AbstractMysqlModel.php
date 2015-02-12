@@ -55,6 +55,8 @@ abstract class AbstractMysqlModel
     public function setId($id)
     {
         $this->idColumn = $id;
+        
+        return $this;
     }
 
     /**

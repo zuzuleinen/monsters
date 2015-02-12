@@ -61,6 +61,21 @@ abstract class AbstractResponse
 
         echo $this->content;
     }
+    
+    /**
+     * Get response status code
+     * 
+     * @return int
+     */
+    public function getStatusCode()
+    {
+        return $this->status;
+    }
+    
+    public function getContent()
+    {
+        return $this->content;
+    }
 
     /**
      * Set content depending on the response type

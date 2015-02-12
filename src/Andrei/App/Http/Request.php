@@ -16,7 +16,7 @@ class Request
     /**
      * @var ParameterContainer 
      */
-    public $post;
+    public $post = null;
 
     /**
      * @var ParameterContainer 
