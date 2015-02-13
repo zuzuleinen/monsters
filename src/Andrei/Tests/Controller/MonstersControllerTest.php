@@ -51,7 +51,7 @@ class MonstersControllerTest extends \PHPUnit_Framework_TestCase
             ->setIsAlive(true);
     }
 
-    public function testCreateAction()
+    public function testCreateActionSuccess()
     {
         $this->requestMock->post = new ParameterContainer(array(
             'race' => 'human',
@@ -77,7 +77,7 @@ class MonstersControllerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetAllAction()
+    public function testGetAllActionSuccess()
     {
         $controller = $this->getController();
 
@@ -107,7 +107,83 @@ class MonstersControllerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Andrei\App\Http\Response\JsonResponse', $response);
         $this->assertEquals('[]', $response->getContent());
-        $this->assertEquals(404 , $response->getStatusCode());
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
+    public function testDeleteAllSuccess()
+    {
+        $this->requestMock->post = new ParameterContainer(array(
+            'race' => 'human',
+            'gold' => 100,
+            'level' => 7,
+            'attack' => 50,
+            'defense' => 23,
+            'turns' => 9,
+            'isAlive' => false
+        ));
+        
+        $this->managerMock->expects($this->once())
+            ->method('deleteAll');
+
+        $controller = $this->getController();
+
+        $response = $controller->deleteAllAction();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('{"success":true}', $response->getContent());
+    }
+
+    public function testUpdateByIdSuccess()
+    {
+        $id = 8;
+        $this->managerMock->expects($this->once())
+            ->method('findById')
+            ->with(new \Andrei\Model\Monster(), 8)
+            ->willReturn($this->humanMonsterMock);
+
+        $this->managerMock->expects($this->once())
+            ->method('update')
+            ->with($this->humanMonsterMock);
+        
+        $this->requestMock->put = new ParameterContainer(array(
+            'race' => 'human',
+            'gold' => 100,
+            'level' => 7,
+            'attack' => 50,
+            'defense' => 23,
+            'turns' => 9,
+            'isAlive' => false
+        ));
+
+        $controller = $this->getController();
+
+        $response = $controller->updateById($id);
+
+        $this->assertEquals(
+            '{"id":8,"race":"human","gold":100,"level":7,"attack":50,"defense":23,"turns":9,"isAlive":false}', 
+            $response->getContent()
+        );
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+    
+    public function testGetByIdActionSuccess()
+    {
+        $id = 8;
+        
+        $this->managerMock->expects($this->once())
+            ->method('findById')
+            ->with(new \Andrei\Model\Monster, $id)
+            ->willReturn($this->humanMonsterMock);
+        
+        $controller = $this->getController();
+        
+        $response = $controller->getByIdAction(8);
+        
+        $this->assertEquals(
+            '{"id":8,"race":"human","gold":100,"level":5,"attack":0,"defense":23,"turns":9,"isAlive":true}', 
+            $response->getContent()
+        );
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     protected function getController()

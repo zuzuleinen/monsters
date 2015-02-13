@@ -65,10 +65,9 @@ class MonstersController extends AbstractController
     {
         $manager = $this->application->getManager();
 
-        if ($this->request->isDelete()) {
-            $manager->deleteAll(new Monster());
-            return $this->getSuccessResponse();
-        }
+        $manager->deleteAll(new Monster());
+        
+        return $this->getSuccessResponse();
     }
 
     /**
@@ -124,8 +123,11 @@ class MonstersController extends AbstractController
 
             if ($monster instanceof Monster) {
                 $viewResponse = MonsterResponse::getResponseObjectFromMonster($monster);
+                $statusCode = 200;
+            } else {
+                $statusCode = 404;
             }
-            return new JsonResponse($viewResponse, 404);
+            return new JsonResponse($viewResponse, $statusCode);
         }
         return new JsonResponse($viewResponse, 400);
     }
@@ -170,4 +172,5 @@ class MonstersController extends AbstractController
 
         return $manager->insert($monster);
     }
+
 }
