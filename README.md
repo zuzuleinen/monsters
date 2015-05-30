@@ -6,7 +6,7 @@ Altough it's not perfect I want to keep it like this to see my coding skills at 
 # Installation instructions
 
 * Run composer install
-* Edit config class with db credentials
+* Edit `Andrei\App\Config` class with db credentials
 * Run the tests and check code coverage: ./vendor/bin/phpunit --coverage-html ./report
 
 
