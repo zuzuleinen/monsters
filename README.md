@@ -7,6 +7,7 @@ Altough it's not perfect I want to keep it like this to see my coding skills at 
 
 * Create a virtual host
 
+```
 <VirtualHost *:80>
 	DocumentRoot "/var/www/monsters"
 	ServerName monsters.dev
@@ -18,6 +19,7 @@ Altough it's not perfect I want to keep it like this to see my coding skills at 
 		Allow from all
 	</Directory>
 </VirtualHost> 
+```
 
 * Run composer install
 * Edit `Andrei\App\Config` class with db credentials
