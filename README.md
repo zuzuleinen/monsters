@@ -5,8 +5,23 @@ Altough it's not perfect I want to keep it like this to see my coding skills at 
 
 # Installation instructions
 
+* Create a virtual host
+
+<VirtualHost *:80>
+	DocumentRoot "/var/www/monsters"
+	ServerName monsters.dev
+
+	<Directory "/var/www/monsters">
+		Options Indexes MultiViews FollowSymLinks
+		AllowOverride All
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost> 
+
 * Run composer install
 * Edit `Andrei\App\Config` class with db credentials
 * Run the tests and check code coverage: ./vendor/bin/phpunit --coverage-html ./report
+
 
 
